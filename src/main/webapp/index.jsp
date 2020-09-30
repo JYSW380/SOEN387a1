@@ -1,3 +1,5 @@
+
+
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.io.PrintWriter" %>
@@ -38,19 +40,31 @@
         <input type="datetime-local" name="finishDate">
         <input type="submit" value="Delete" name="deletebtn">
     </form>
+    <form action="ChartServlet" method="get">
+        <label>Refresh</label>
+        <input type="submit" value="Refresh" name="refresh">
+    </form>
+
 
 </div>
 <div>
     <%
         try{
             PrintWriter temp =response.getWriter();
-            ArrayList<Object[]> result = (ArrayList<Object[]>) request.getAttribute("chatmessage");
-            for(Object[] t: result){
-                for(Object t1: t){
-                    temp.println(t1);
-                }
-                temp.println("<br/>");
+            String err = (String) request.getAttribute("errmessage");
+            if(err !=null ){
+                temp.println(err);
             }
+            else{
+                ArrayList<Object[]> result = (ArrayList<Object[]>) request.getAttribute("chatmessage");
+                for(Object[] t: result){
+                    for(Object t1: t){
+                        temp.println(t1);
+                    }
+                    temp.println("<br/>");
+                }
+            }
+
 
         }
         catch (Exception e){
