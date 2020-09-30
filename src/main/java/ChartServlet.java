@@ -1,4 +1,4 @@
-import jdk.nashorn.internal.ir.CallNode;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -7,17 +7,34 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sound.midi.Soundbank;
-import javax.swing.*;
+
 import java.io.IOException;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
+
 
 @WebServlet("/ChartServlet")
 public class ChartServlet extends HttpServlet {
     ChatManager chartManager = new ChatManager(); // usebean store session
+    private void checkreferer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String referer = request.getHeader("Referer");
+//        System.out.println(referer);
+        if(referer== null){
+            request.setAttribute("errmessage", "cannot preceed the request");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+            requestDispatcher.forward(request, response);
+        }
+    }
+    private void redirectdata(HttpServletRequest request, HttpServletResponse response, ArrayList<Object[]> chatmessage) throws ServletException, IOException {
+        request.setAttribute("chatmessage", chatmessage);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+        requestDispatcher.forward(request, response);
+    }
+    private void refresh(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ArrayList<Object[]> chatmes = chartManager.getallmessage();
+        redirectdata(request,response,chatmes);
+    }
+
 
     private void w2file(HttpServletResponse response, String type, ArrayList<Object[]> chatmessage) throws IOException {
         //by default contenttype is text/HTML
@@ -42,6 +59,7 @@ public class ChartServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        checkreferer(request,response);
         String user = request.getParameter("user");
         String message = request.getParameter("message");
         ArrayList<Object[]> chatmessage;
@@ -51,49 +69,41 @@ public class ChartServlet extends HttpServlet {
         else {
             chatmessage= chartManager.PostMessage(user, message);
         }
-        request.setAttribute("chatmessage", chatmessage);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-        requestDispatcher.forward(request, response);
+        redirectdata(request,response,chatmessage);
+
+
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String getbtn = request.getParameter("getbtn");
+        checkreferer(request,response);
+        String ref = request.getParameter("refresh");
         String delbtn = request.getParameter("deletebtn");
         String startDate = request.getParameter("startDate");
         String finishDate = request.getParameter("finishDate");
         String isxml = request.getParameter("xml");
-        if(delbtn != null){
+        if(ref!=null){
+            refresh(request,response);
+        }
+        else if(delbtn != null){
             delete(request,response,startDate,finishDate);
         }
         else{
             ArrayList<Object[]> chatmessage = chartManager.ListMessages(startDate,finishDate);
-        try{
-            w2file(response, isxml!=null?"xml":"txt" ,chatmessage);
-        }
-        catch (IOException e){
+            try{
+                w2file(response, isxml!=null?"xml":"txt" ,chatmessage);
+            }
+            catch (IOException e){
 
-        }
+            }
         }
 
-//
     }
 
-//    @Override
-//    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        String clear = req.getParameter("clear");
-//        String startDate = req.getParameter("startDate");
-//        String finishDate = req.getParameter("finishDate");
-//        chartManager.ClearChat(null,null);
-//       // chartManager.ClearChat(startDate,finishDate);
-//
-//    }
-
-    protected void delete(HttpServletRequest req, HttpServletResponse resp, String startDate, String finishDate ) throws ServletException, IOException {
+    protected void delete(HttpServletRequest request, HttpServletResponse response, String startDate, String finishDate ) throws ServletException, IOException {
         chartManager.ClearChat(startDate,finishDate);
         ArrayList<Object[]> chatmes = chartManager.getallmessage();
-        req.setAttribute("chatmessage",chatmes );
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
-        requestDispatcher.forward(req, resp);
+        redirectdata(request,response,chatmes);
         // chartManager.ClearChat(startDate,finishDate);
     }
 }
