@@ -1,57 +1,66 @@
-
+import com.sun.org.apache.bcel.internal.generic.DADD;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChatManager {
 
-    // add property by order
-    private  ArrayList<Object[]> userMessage= new ArrayList<Object[]>();
+    Map<LocalDateTime, String[]> userMessage = new HashMap<LocalDateTime, String[]>();
 
-    public ArrayList<Object[]> PostMessage(String user, String message) {
+    public void PostMessage(String user, String message) {
         LocalDateTime date = LocalDateTime.now();
-        Object[] el = {date,user, message};
-        userMessage.add(el);
-        return new ArrayList<Object[]>(userMessage);
-
-    }
-    public ArrayList<Object [] > getallmessage(){
-        return new ArrayList<Object[]>(userMessage);
+        userMessage.put(date, new String[]{user, message});
     }
 
+    public Map<LocalDateTime, String[]> ListMessages(LocalDateTime startDate, LocalDateTime finishDate){
+        Map<LocalDateTime, String[]> userMessageLists = new HashMap<LocalDateTime, String[]>();
 
-    public ArrayList<Object[]> ListMessages(String startDate, String finishDate){
-        ArrayList<Object[]> userMessageLists = new ArrayList<Object[]>();
-
-        if(startDate.equals("")  && finishDate.equals("") ) {
-            return new ArrayList<Object[]>(userMessage);
+        if(startDate==null  && finishDate==null) {
+            return new HashMap<LocalDateTime, String[]>(userMessage);
         }
         else{
-            for(Object[] t: userMessage){
-                LocalDateTime date = (LocalDateTime) t[0];
-                if(date.isAfter(LocalDateTime.parse(startDate))|| date.isBefore(LocalDateTime.parse(finishDate))){
-                    Object [] el = {t[1],t[2]};
-                    userMessageLists.add(el);
+            userMessage.forEach((key, value) -> {
+                if(key.isAfter(startDate) || key.isBefore(finishDate)) {
+                    userMessageLists.put(key, value);
                 }
-
-            }
+            });
             return userMessageLists;
         }
 
     }
 
-    public void ClearChat(String startDate, String finishDate) {
-        if((startDate.equals("") ) && finishDate.equals("") ) {
+    public void ClearChat(LocalDateTime startDate, LocalDateTime finishDate) {
+        if((startDate==null) && finishDate==null) {
             userMessage.clear();
         }
         else {
-            userMessage.removeIf( (message) ->{
-                LocalDateTime date = (LocalDateTime) message[0];
-                return (date.isAfter(LocalDateTime.parse(startDate))|| date.isBefore(LocalDateTime.parse(finishDate)));
+            userMessage.forEach((key, value) -> {
+                if(key.isAfter(startDate) || key.isBefore(finishDate)) {
+                    userMessage.remove(key);
+                }
             });
         }
     }
+
+    public String toString() {
+
+        userMessage.forEach((key, value) -> {
+            System.out.println(key+" "+ value[0] + value[1]);
+        });
+        return "";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
