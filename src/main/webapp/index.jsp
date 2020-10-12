@@ -13,10 +13,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include  file="./header.html" %>
-<<<<<<< HEAD
-
-=======
->>>>>>> fbf0cba1d89532b2387efb5daffafc38b7d82a06
 
 <div class="bgimg"></div>
 
@@ -32,23 +28,39 @@
             <hr/>
             <h5 class="currentdate"></h5>
             <div class="spacer"></div>
-            <h6><i class="fad fa-user-alt"></i>Uriel Bitton<span><input placeholder="Client Name"></span></h6>
-            <h6><i class="fad fa-envelope"></i>urielas@hotmail.com<span><input placeholder="Client Email"></span></h6>
-            <h6><i class="fad fa-location-circle"></i>Montreal, Canada<span><input placeholder="Client Location"></span></h6>
+<%--            <h6><i class="fad fa-user-alt"></i>Uriel Bitton<span><input placeholder="Client Name"></span></h6>--%>
+<%--            <h6><i class="fad fa-envelope"></i>urielas@hotmail.com<span><input placeholder="Client Email"></span></h6>--%>
+<%--            <h6><i class="fad fa-location-circle"></i>Montreal, Canada<span><input placeholder="Client Location"></span></h6>--%>
 
             <div class="navigator">
                 <h4>Chat Options</h4>
+
                 <ul>
                     <li><form action="ChartServlet" method="get">
                         <h6>Get Messages</h6>
-                    </form></li>
+                        <label>Start date</label><br/>
+                        <input type="datetime-local" name="startDate">
+                        <label>End date</label>
+                        <input type="datetime-local" name="finishDate">
+                        <label>XML format</label>
+                        <input type="checkbox" value="xml" name="xml"><br/>
+                        <input type="submit" value="Get" name="getbtn">
+                        </form>
+                    </li>
                     <li><form action="ChartServlet" method="get">
                         <h6>Delete Message</h6>
-                    </form></li>
+                        <label>Start date</label>
+                        <input type="datetime-local" name="startDate">
+                        <label>End date</label>
+                        <input type="datetime-local" name="finishDate">
+                        <input type="submit" value="Delete" name="deletebtn">
+                    </form>
+                    </li>
                     <li><form action="ChartServlet" method="get">
                         <h6>Refresh Chat</h6>
                         <button type="submit" value="Refresh" name="refresh">Refresh</button>
-                    </form></li>
+                    </form>
+                    </li>
                 </ul>
             </div>
 
@@ -74,9 +86,11 @@
                             else{
                                 ArrayList<Object[]> result = (ArrayList<Object[]>) request.getAttribute("chatmessage");
                                 for(Object[] t: result){
-                                    out.println("<div class=\"msgcont msgright right\"><div class=\"msg\"><img src=\"https://i.imgur.com/UBpqvP7.png\" /><span>"+t[1]+"</span><p>"+t[2]+"</p></div><div class=\"clear\"></div><small class=\"timestamp\">"+t[0]+"</small></div>");
+                                    out.println("<div class=\"msgcont msgright right\"><div class=\"msg\"><img src=\"https://i.imgur.com/UBpqvP7.png\" /><span>"+t[2]+"</span></div>" +
+                                            "<div class=\"clear\"></div><p>"+t[1]+"</p><small class=\"timestamp\">"+t[0]+"</small></div>");
+//
                                 }
-                            }
+                                }
                         }
                         catch (Exception e){
                         }
@@ -89,10 +103,10 @@
             <div class="typecontainer">
                 <div class="inputcont">
                     <img src="https://i.imgur.com/UBpqvP7.png" />
-                    <form action="ChartServlet" method="post">
+                    <form action="ChartServlet" method="post" id="postmessage">
                         <input class="maininp" type="text" name="message" placeholder="Send a message...">
                         <input class="personinp" type="text" name="user" size="20" placeholder="Your Username">
-                        <button type="submit" value="Submit"><i class="fad fa-paper-plane sendbtn"></i></button>
+                        <button type="submit" value="Submit" form="postmessage"><i class="fad fa-paper-plane sendbtn"></i></button>
                     </form>
                 </div>
             </div>
@@ -128,29 +142,7 @@
 
 </div>
 
-<<<<<<< HEAD
-=======
-<div>
-    <%
-        try{
 
-
-                ArrayList<Object[]> result = (ArrayList<Object[]>) request.getAttribute("chatmessage");
-                for(Object[] t: result){
-                    for(Object t1: t){
-                        out.println("<p>"+t1+"</p>");
-
-                    }
-                    out.println("<br/>");
-                }
-
-        }
-        catch (Exception e){
-
-        }
-    %>
-</div>
->>>>>>> fbf0cba1d89532b2387efb5daffafc38b7d82a06
 
 <script src="index.js"></script>
 
