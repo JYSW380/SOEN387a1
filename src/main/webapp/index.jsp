@@ -125,6 +125,29 @@
 
 </div>
 
+<<<<<<< HEAD
+=======
+<div>
+    <%
+        try{
+
+
+                ArrayList<Object[]> result = (ArrayList<Object[]>) request.getAttribute("chatmessage");
+                for(Object[] t: result){
+                    for(Object t1: t){
+                        out.println("<p>"+t1+"</p>");
+
+                    }
+                    out.println("<br/>");
+                }
+
+        }
+        catch (Exception e){
+
+        }
+    %>
+</div>
+>>>>>>> master
 
 <script src="index.js"></script>
 
