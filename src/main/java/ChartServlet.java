@@ -18,7 +18,7 @@ public class ChartServlet extends HttpServlet {
     ChatManager chartManager = new ChatManager(); // usebean store session
     private void checkreferer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String referer = request.getHeader("Referer");
-//        System.out.println(referer);
+        System.out.println(referer);
         if(referer== null){
             request.setAttribute("errmessage", "cannot preceed the request");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
