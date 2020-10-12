@@ -92,19 +92,17 @@
 <div>
     <%
         try{
-            PrintWriter temp =response.getWriter();
-            String err = (String) request.getAttribute("errmessage");
-            if(err !=null ){
-                temp.println(err);
-            }
-            else{
+
+
                 ArrayList<Object[]> result = (ArrayList<Object[]>) request.getAttribute("chatmessage");
                 for(Object[] t: result){
                     for(Object t1: t){
-                        temp.println(t1);
+                        out.println("<p>"+t1+"</p>");
+
                     }
+                    out.println("<br/>");
                 }
-            }
+
         }
         catch (Exception e){
 
