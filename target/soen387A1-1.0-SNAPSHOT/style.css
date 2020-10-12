@@ -1,0 +1,251 @@
+body {
+    font-family: Montserrat, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.bgimg {
+    position: absolute;
+    width:100%;
+    height:100%;
+    background-image: url(https://i.imgur.com/yiLOHlp.jpg);
+    background-size: cover;
+    background-position: center;
+    filter: brightness(20%);
+}
+
+* {
+    box-sizing: border-box;
+}
+h1,h2,h3,h4,h5,h6,p,i,button,input,span,small,img {
+    position: relative;
+    margin: 0;
+}
+.spacerl {
+    height: 100px;
+}
+.spacer {
+    height: 50px;
+}
+hr {
+    border: none;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+.clear {
+    clear: both;
+}
+img {
+    object-fit: cover;
+}
+input, textarea {
+    outline: none;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(8px);
+}
+.app {
+    position: relative;
+    width: 80%;
+    height: 95%;
+    border-radius: 10px;
+    background: #fdfdfd;
+    box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+    display: grid;
+    grid-template-columns: 300px auto;
+    padding: 30px;
+    grid-gap: 30px 50px;
+    transition: all 0.3s;
+}
+.sidebar {
+    padding: 20px;
+}
+.sidebar h2 {
+    font-weight: 500;
+    font-size: 27px;
+    color: #555;
+    margin-top: 50px;
+    transition: all 0.3s;
+}
+.sidebar h6 {
+    margin: 20px 0;
+    font-size: 14px;
+    color: #bbb;
+    transition: all 0.3s;
+}
+.sidebar h6 i {
+    margin-right: 10px;
+    transition: all 0.3s;
+}
+.sidebar h6 span {
+    display: block;
+    font-weight: 400;
+    margin-top: 5px;
+    color: #111;
+    font-size: 12px;
+    margin-left: 25px;
+    transition: all 0.3s;
+}
+.sidebar hr {
+    height: 1px;
+    width: 120px;
+    background: #ccc;
+    margin-left: 0;
+    margin-top: 50px;
+}
+.sidebar h5 {
+    margin-top: 40px;
+    font-size: 16px;
+    color: #555;
+    font-weight: 500;
+}
+.menuicons i {
+    cursor: pointer;
+    font-size: 20px;
+    margin-right: 10px;
+    transition: all 0.2s;
+}
+.menuicons i:hover {
+    color: rgb(83, 172, 255);
+}
+
+.chatcontainer {
+    position: relative;
+    height: 100%;
+    width: 90%;
+    padding: 10px;
+    padding-bottom: 90px;
+}
+.chatwindow {
+    position: absolute;
+    height:85%;
+    width: 100%;
+    padding: 10px 0;
+    overflow-y: scroll;
+}
+.chatwindow::-webkit-scrollbar {
+    display: none;
+}
+.typecontainer {
+    position: absolute;
+    bottom: 10px;
+    width: 95%;
+    height:65px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 100;
+}
+.inputcont {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    box-shadow: 0 1px 15px rgba(0,0,0,0.1);
+    padding: 10px 12px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+}
+.inputcont img {
+    margin-right: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-left: 10px;
+}
+.inputcont input {
+    position: relative;
+    width: 85%;
+    padding: 10px;
+    border: none;
+    background: none;
+    color: #555;
+    font-family: inherit;
+}
+.inputcont input::placeholder {
+    color: #ddd;
+}
+.inputcont i {
+    font-size: 20px;
+    color: rgb(83, 172, 255);
+    cursor: pointer;
+}
+.msgcont {
+    position: relative;
+    display: block;
+    max-width: 60%;
+    width: 100%;
+    margin: 10px;
+}
+.msgcont .msg {
+    position: relative;
+    background: #fff;
+    box-shadow: 0 1px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    padding: 15px 20px;
+    border-radius: 15px;
+    transition: all 0.3s;
+}
+.msgleft .msg {
+    border-bottom-left-radius: 1px;
+    float: left;
+    background: rgb(83, 172, 255);
+}
+.msgright .msg {
+    border-bottom-right-radius: 1px;
+    float: right;
+}
+.msgcont img {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    margin-right: 15px;
+}
+.msgcont p {
+    font-size: 13px;
+    color: #777;
+    font-weight: 500;
+    line-height: 1.5;
+    max-width: 90%;
+    float: left;
+    word-break: break-all
+}
+.msgright img {
+    float: right;
+}
+.msgleft i {
+    float: left;
+    color: #fff;
+    font-size: 20px;
+    margin-right: 15px;
+}
+.msgleft p {
+    color: #fff;
+}
+.msgcont small {
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 7px;
+    display: block;
+    letter-spacing: 1px;
+}
+.msgleft small {
+    text-align: left;
+    margin-left: 5px;
+}
+.msgright small {
+    margin-right: 5px;
+    text-align: right;
+}
