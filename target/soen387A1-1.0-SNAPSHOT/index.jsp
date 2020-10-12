@@ -13,7 +13,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include  file="./header.html" %>
+<<<<<<< HEAD
 
+=======
+>>>>>>> fbf0cba1d89532b2387efb5daffafc38b7d82a06
 
 <div class="bgimg"></div>
 
@@ -125,6 +128,29 @@
 
 </div>
 
+<<<<<<< HEAD
+=======
+<div>
+    <%
+        try{
+
+
+                ArrayList<Object[]> result = (ArrayList<Object[]>) request.getAttribute("chatmessage");
+                for(Object[] t: result){
+                    for(Object t1: t){
+                        out.println("<p>"+t1+"</p>");
+
+                    }
+                    out.println("<br/>");
+                }
+
+        }
+        catch (Exception e){
+
+        }
+    %>
+</div>
+>>>>>>> fbf0cba1d89532b2387efb5daffafc38b7d82a06
 
 <script src="index.js"></script>
 
