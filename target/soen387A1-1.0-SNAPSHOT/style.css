@@ -3,6 +3,9 @@ body {
     margin: 0;
     padding: 0;
 }
+:root {
+    --color: rgb(83, 172, 255);
+}
 .bgimg {
     position: absolute;
     width:100%;
@@ -75,7 +78,7 @@ input, textarea {
     font-weight: 500;
     font-size: 27px;
     color: #555;
-    margin-top: 50px;
+    margin-top: 40px;
     transition: all 0.3s;
 }
 .sidebar h6 {
@@ -102,13 +105,22 @@ input, textarea {
     width: 120px;
     background: #ccc;
     margin-left: 0;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 .sidebar h5 {
-    margin-top: 40px;
+    margin-top: 20px;
     font-size: 16px;
     color: #555;
     font-weight: 500;
+}
+.sidebar input {
+    padding: 10px;
+    border: none;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+.sidebar input::placeholder {
+    color: #ccc;
 }
 .menuicons i {
     cursor: pointer;
@@ -165,22 +177,46 @@ input, textarea {
     border-radius: 100%;
     margin-left: 10px;
 }
-.inputcont input {
-    position: relative;
+.inputcont form {
     width: 85%;
+}
+.inputcont .maininp {
+    position: relative;
+    width: 70%;
     padding: 10px;
     border: none;
     background: none;
     color: #555;
+    float: left;
     font-family: inherit;
 }
 .inputcont input::placeholder {
     color: #ddd;
 }
-.inputcont i {
+.inputcont .personinp {
+    position: relative;
+    top: -1px;
+    width: 20%;
+    padding: 10px;
+    padding-top: 12px;
+    border: none;
+    border-left: 1px solid #f1f1f1;
+    background: none;
+    color: #555;
+    float: left;
+    font-family: inherit;
+}
+.inputcont button {
+    position: absolute;
+    top: 22px;
+    right: 30px;
+    width: 50px;
     font-size: 20px;
     color: rgb(83, 172, 255);
     cursor: pointer;
+    border: none;
+    float: left;
+    background: none;
 }
 .msgcont {
     position: relative;
@@ -201,7 +237,7 @@ input, textarea {
 .msgleft .msg {
     border-bottom-left-radius: 1px;
     float: left;
-    background: rgb(83, 172, 255);
+    background: var(--color);
 }
 .msgright .msg {
     border-bottom-right-radius: 1px;
@@ -214,13 +250,26 @@ input, textarea {
     margin-right: 15px;
 }
 .msgcont p {
-    font-size: 13px;
+    font-size: 14px;
     color: #777;
     font-weight: 500;
     line-height: 1.5;
     max-width: 90%;
     float: left;
     word-break: break-all
+}
+.msgright p {
+    top: 6px;
+    padding-top: 10px;
+    padding-bottom: 7px;
+}
+.msgright span {
+    font-size: 12px;
+    position: absolute;
+    top: 7px;
+    color: #333;
+    left: 20px;
+    font-weight: 600;
 }
 .msgright img {
     float: right;
@@ -249,3 +298,74 @@ input, textarea {
     margin-right: 5px;
     text-align: right;
 }
+.navigator {
+    position: relative;
+    margin-top: 40px;
+    width: 300px;
+    height: 320px;
+    padding: 20px;
+    border-radius: 10px;
+    background: #f5f5f5;
+}
+.navigator h4 {
+    text-align: center;
+    font-size: 17px;
+    color: #333;
+    margin-bottom: 30px;
+}
+.navigator ul {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    overflow-y: scroll;
+    padding: 0;
+}
+.navigator ul::-webkit-scrollbar {
+    width: 5px;
+}
+.navigator ul li {
+    list-style-type: none;
+    margin: 15px 0;
+}
+.navigator li h6 {
+    display: block;
+    font-weight: 400;
+    color: #111;
+    margin-bottom: 10px;
+}
+.navigator li button {
+    background: #333;
+    color: #fff;
+    padding: 7px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    font-size: 13px;
+    transition: all 0.3s;
+}
+.navigator li button:hover {
+    background: #111;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

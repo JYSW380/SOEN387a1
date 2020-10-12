@@ -12,6 +12,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include  file="./header.html" %>
 
 
 <div class="bgimg"></div>
@@ -24,13 +25,29 @@
                 <i class="fad fa-stream slidebtn"></i>
                 <i class="fad fa-adjust darkmode"></i>
             </div>
-            <h2>JSP<br/> Chat App</h2>
-            <div class="spacer"></div>
-            <h6><i class="fad fa-user-alt"></i>Uriel Bitton<span>Client Name</span></h6>
-            <h6><i class="fad fa-envelope"></i>urielas@hotmail.com<span>Client Email</span></h6>
-            <h6><i class="fad fa-location-circle"></i>Montreal, Canada<span>Client Location</span></h6>
+            <h2>JSP Chat App</h2>
             <hr/>
             <h5 class="currentdate"></h5>
+            <div class="spacer"></div>
+            <h6><i class="fad fa-user-alt"></i>Uriel Bitton<span><input placeholder="Client Name"></span></h6>
+            <h6><i class="fad fa-envelope"></i>urielas@hotmail.com<span><input placeholder="Client Email"></span></h6>
+            <h6><i class="fad fa-location-circle"></i>Montreal, Canada<span><input placeholder="Client Location"></span></h6>
+
+            <div class="navigator">
+                <h4>Chat Options</h4>
+                <ul>
+                    <li><form action="ChartServlet" method="get">
+                        <h6>Get Messages</h6>
+                    </form></li>
+                    <li><form action="ChartServlet" method="get">
+                        <h6>Delete Message</h6>
+                    </form></li>
+                    <li><form action="ChartServlet" method="get">
+                        <h6>Refresh Chat</h6>
+                        <button type="submit" value="Refresh" name="refresh">Refresh</button>
+                    </form></li>
+                </ul>
+            </div>
 
         </div>
         <div class="chatcontainer">
@@ -44,6 +61,24 @@
                         <div class="clear"></div>
                         <small class="timestamp">Just now</small>
                     </div>
+                    <%
+                        try{
+                            //PrintWriter temp =response.getWriter();
+                            String err = (String) request.getAttribute("errmessage");
+                            if(err !=null ){
+                                out.println(err);
+                            }
+                            else{
+                                ArrayList<Object[]> result = (ArrayList<Object[]>) request.getAttribute("chatmessage");
+                                for(Object[] t: result){
+                                    out.println("<div class=\"msgcont msgright right\"><div class=\"msg\"><img src=\"https://i.imgur.com/UBpqvP7.png\" /><span>"+t[1]+"</span><p>"+t[2]+"</p></div><div class=\"clear\"></div><small class=\"timestamp\">"+t[0]+"</small></div>");
+                                }
+                            }
+                        }
+                        catch (Exception e){
+                        }
+                    %>
+
                 </div>
 
                 <div class="clear"></div>
@@ -52,9 +87,10 @@
                 <div class="inputcont">
                     <img src="https://i.imgur.com/UBpqvP7.png" />
                     <form action="ChartServlet" method="post">
-                        <input type="text" name="message" placeholder="Send a message...">
+                        <input class="maininp" type="text" name="message" placeholder="Send a message...">
+                        <input class="personinp" type="text" name="user" size="20" placeholder="Your Username">
+                        <button type="submit" value="Submit"><i class="fad fa-paper-plane sendbtn"></i></button>
                     </form>
-                    <i class="fad fa-paper-plane sendbtn" type="submit" value="Submit"></i>
                 </div>
             </div>
         </div>
@@ -89,29 +125,8 @@
 
 </div>
 
-<div>
-    <%
-        try{
-            PrintWriter temp =response.getWriter();
-            String err = (String) request.getAttribute("errmessage");
-            if(err !=null ){
-                temp.println(err);
-            }
-            else{
-                ArrayList<Object[]> result = (ArrayList<Object[]>) request.getAttribute("chatmessage");
-                for(Object[] t: result){
-                    for(Object t1: t){
-                        temp.println(t1);
-                    }
-                }
-            }
-        }
-        catch (Exception e){
 
-        }
-    %>
-</div>
-
+<script src="index.js"></script>
 
 </body>
 </html>
