@@ -16,16 +16,16 @@ import java.util.ArrayList;
 @WebServlet("/ChartServlet")
 public class ChartServlet extends HttpServlet {
     ChatManager chartManager = new ChatManager(); // usebean store session
-    private boolean checkreferer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void checkreferer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String referer = request.getHeader("Referer");
 //        System.out.println(referer);
         if(referer== null){
             request.setAttribute("errmessage", "cannot preceed the request");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("err.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
             requestDispatcher.forward(request, response);
-            return true;
+
         }
-        return false;
+
     }
     private void redirectdata(HttpServletRequest request, HttpServletResponse response, ArrayList<Object[]> chatmessage) throws ServletException, IOException {
         request.setAttribute("chatmessage", chatmessage);
@@ -78,7 +78,7 @@ public class ChartServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(!checkreferer(request,response)){
+            checkreferer(request,response);
             String user = request.getParameter("user");
             String message = request.getParameter("message");
             ArrayList<Object[]> chatmessage;
@@ -91,14 +91,13 @@ public class ChartServlet extends HttpServlet {
             redirectdata(request,response,chatmessage);
 
 
-        }
+
 
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(!checkreferer(request,response)) {
-
+            checkreferer(request,response);
             String ref = request.getParameter("refresh");
             String delbtn = request.getParameter("deletebtn");
             String startDate = request.getParameter("startDate");
@@ -116,7 +115,7 @@ public class ChartServlet extends HttpServlet {
 
                 }
             }
-        }
+
 
     }
 
