@@ -16,11 +16,7 @@
 
 <div class="bgimg"></div>
 
-
-
-
 <div class="container">
-
     <div class="app">
 
         <div class="sidebar">
@@ -80,20 +76,18 @@
                         <div class="clear"></div>
                         <small class="timestamp">Just now</small>
                     </div>
-                    <div class="spacer"></div>
-
                     <%
                         try{
-
+                            //PrintWriter temp =response.getWriter();
                             String err = (String) request.getAttribute("errmessage");
                             if(err !=null ){
-                                out.println("<div class=\"msgcont msgleft left\">"+err+"</div>");
+                                out.println(err);
                             }
                             else{
                                 ArrayList<Object[]> result = (ArrayList<Object[]>) request.getAttribute("chatmessage");
                                 for(Object[] t: result){
-                                    out.println("<div class=\"msgcont msgright right\"><div class=\"msg\"><img src=\"https://i.imgur.com/UBpqvP7.png\" />"+t[2]+"</div>" +
-                                            "<small>"+t[1]+"</small><small class=\"timestamp\">"+t[0]+"</small></div>");
+                                    out.println("<div class=\"msgcont msgright right\"><div class=\"msg\"><img src=\"https://i.imgur.com/UBpqvP7.png\" /><span>"+t[2]+"</span></div>" +
+                                            "<div class=\"clear\"></div><p>"+t[1]+"</p><small class=\"timestamp\">"+t[0]+"</small></div>");
 //
                                 }
                                 }
@@ -120,6 +114,35 @@
 
     </div>
 </div>
+
+
+<div style="display: none">
+    <form action="ChartServlet" method="get">
+        <label>Get message</label>
+        <label>Start date</label>
+        <input type="datetime-local" name="startDate">
+        <label>End date</label>
+        <input type="datetime-local" name="finishDate">
+        <label>XML format</label>
+        <input type="checkbox" value="xml" name="xml">
+        <input type="submit" value="Get" name="getbtn">
+    </form>
+    <form action="ChartServlet" method="get">
+        <label>Delete message</label>
+        <label>Start date</label>
+        <input type="datetime-local" name="startDate">
+        <label>End date</label>
+        <input type="datetime-local" name="finishDate">
+        <input type="submit" value="Delete" name="deletebtn">
+    </form>
+    <form action="ChartServlet" method="get">
+        <label>Refresh</label>
+        <input type="submit" value="Refresh" name="refresh">
+    </form>
+
+</div>
+
+
 
 <script src="index.js"></script>
 

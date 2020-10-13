@@ -16,16 +16,16 @@ import java.util.ArrayList;
 @WebServlet("/ChartServlet")
 public class ChartServlet extends HttpServlet {
     ChatManager chartManager = new ChatManager(); // usebean store session
-    private void checkreferer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private boolean checkreferer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String referer = request.getHeader("Referer");
-        System.out.println(referer);
+//        System.out.println(referer);
         if(referer== null){
             request.setAttribute("errmessage", "cannot preceed the request");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("err.jsp");
             requestDispatcher.forward(request, response);
-
+            return true;
         }
-
+        return false;
     }
     private void redirectdata(HttpServletRequest request, HttpServletResponse response, ArrayList<Object[]> chatmessage) throws ServletException, IOException {
         request.setAttribute("chatmessage", chatmessage);
@@ -78,45 +78,45 @@ public class ChartServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        checkreferer(request,response);
-        String user = request.getParameter("user");
-        String message = request.getParameter("message");
-        ArrayList<Object[]> chatmessage;
-        if(user==null || user=="") {
-            chatmessage =chartManager.PostMessage("anonymous", message);
-        }
-        else {
-            chatmessage= chartManager.PostMessage(user, message);
-        }
+        if(!checkreferer(request,response)){
+            String user = request.getParameter("user");
+            String message = request.getParameter("message");
+            ArrayList<Object[]> chatmessage;
+            if(user==null || user=="") {
+                chatmessage =chartManager.PostMessage("anonymous", message);
+            }
+            else {
+                chatmessage= chartManager.PostMessage(user, message);
+            }
             redirectdata(request,response,chatmessage);
 
 
-
+        }
 
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        checkreferer(request,response);
+        if(!checkreferer(request,response)) {
 
-        String ref = request.getParameter("refresh");
-        String delbtn = request.getParameter("deletebtn");
-        String startDate = request.getParameter("startDate");
-        String finishDate = request.getParameter("finishDate");
-        String isxml = request.getParameter("xml");
-        if (ref != null) {
-            refresh(request, response);
-        } else if (delbtn != null) {
-            delete(request, response, startDate, finishDate);
-        } else {
-            ArrayList<Object[]> chatmessage = chartManager.ListMessages(startDate, finishDate);
-            try {
+            String ref = request.getParameter("refresh");
+            String delbtn = request.getParameter("deletebtn");
+            String startDate = request.getParameter("startDate");
+            String finishDate = request.getParameter("finishDate");
+            String isxml = request.getParameter("xml");
+            if (ref != null) {
+                refresh(request, response);
+            } else if (delbtn != null) {
+                delete(request, response, startDate, finishDate);
+            } else {
+                ArrayList<Object[]> chatmessage = chartManager.ListMessages(startDate, finishDate);
+                try {
                     w2file(response, isxml != null ? "xml" : "txt", chatmessage);
                 } catch (IOException e) {
 
                 }
+            }
         }
-
 
     }
 
