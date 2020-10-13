@@ -60,6 +60,11 @@
                         <h6>Refresh Chat</h6>
                         <button type="submit" value="Refresh" name="refresh">Refresh</button>
                     </form>
+                    <!-- curl http://localhost:8080/soen387A1_war/ChartServlet?clearbtn=Clear -->
+                    <form action="ChartServlet" method="get">
+                        <label>Clear</label>
+                        <input type="submit" value="Clear" name="clearbtn">
+                    </form>
                     </li>
                 </ul>
             </div>

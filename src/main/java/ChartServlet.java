@@ -77,6 +77,7 @@ public class ChartServlet extends HttpServlet {
 
     }
 
+    // cURL Simulate Post request -> curl --data "user=value1&message=value2" http://localhost:8080/soen387A1_war/ChartServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(!checkreferer(request,response)){
             String user = request.getParameter("user");
@@ -104,15 +105,22 @@ public class ChartServlet extends HttpServlet {
             String startDate = request.getParameter("startDate");
             String finishDate = request.getParameter("finishDate");
             String isxml = request.getParameter("xml");
-            if (ref != null) {
-                refresh(request, response);
-            } else if (delbtn != null) {
-                delete(request, response, startDate, finishDate);
-            } else {
-                ArrayList<Object[]> chatmessage = chartManager.ListMessages(startDate, finishDate);
-                try {
-                    w2file(response, isxml != null ? "xml" : "txt", chatmessage);
-                } catch (IOException e) {
+            // clear chat with Curl
+            String clearBtn = request.getParameter("clearbtn");
+
+            if(ref!=null){
+                refresh(request,response);
+            }
+            else if(delbtn != null){
+                delete(request,response,startDate,finishDate);
+            }else if (clearBtn != null){
+                delete(request,response,"","");
+            }else{
+                ArrayList<Object[]> chatmessage = chartManager.ListMessages(startDate,finishDate);
+                try{
+                    w2file(response, isxml!=null?"xml":"txt" ,chatmessage);
+                }
+                catch (IOException e){
 
                 }
             }
